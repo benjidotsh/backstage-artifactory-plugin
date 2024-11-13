@@ -36,7 +36,9 @@
   },
   "dependencies": {
     "@backstage/backend-common": "^0.17.0",
+    "@backstage/backend-plugin-api": "^1.0.1",
     "@backstage/config": "^1.0.5",
+    "@backstage/plugin-catalog-node": "^1.13.1",
     "@types/express": "*",
     "express": "^4.17.3",
     "express-promise-router": "^4.1.0",

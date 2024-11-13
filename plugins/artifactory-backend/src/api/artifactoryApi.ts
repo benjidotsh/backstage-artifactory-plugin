@@ -2,6 +2,7 @@ import { JfrogClient } from "jfrog-client-js";
 import { Logger } from 'winston';
 import { Config } from '@backstage/config';
 import { Entity } from '@backstage/catalog-model';
+import { LoggerService } from "@backstage/backend-plugin-api";
 
 /** @public */
 
@@ -24,7 +25,7 @@ export type Artifact = {
 /** @public */
 
 type Artifactory = {
-    logger: Logger;
+    logger: Logger | LoggerService;
     client: JfrogClient;
     config: Config;
     getArtifacts(entity: Entity): Promise<Artifact[]>;
@@ -35,14 +36,14 @@ export type { Artifactory };
 /** @public */
 export class ArtifactoryApi implements Artifactory {
 
-    logger: Logger;
+    logger: Logger | LoggerService;
     client: JfrogClient;
     config: Config;
 
 
     public constructor(
       config: Config,
-        logger: Logger,
+        logger: Logger | LoggerService,
       ) {
         this.logger = logger;
         this.config = config.getConfig('artifactory');
@@ -67,7 +68,7 @@ export class ArtifactoryApi implements Artifactory {
             //retryDelay: 1000,    
             }
         );
-        logger.debug(this.client);
+        logger.debug(JSON.stringify(this.client));
     }
         
     public async getArtifacts(entity: Entity): Promise<Artifact[]> {
@@ -116,7 +117,7 @@ export class ArtifactoryApi implements Artifactory {
         .system()
         .version()
         .then((result) => {
-          this.logger.debug(result);
+          this.logger.debug(JSON.stringify(result));
         })
         .catch((error) => {
           this.logger.error(error);

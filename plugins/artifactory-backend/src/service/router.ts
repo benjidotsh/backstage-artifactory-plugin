@@ -12,11 +12,12 @@ import {
 } from '@backstage/catalog-model';
 import { CatalogApi } from '@backstage/catalog-client';
 import { InputError } from '@backstage/errors';
+import { LoggerService } from '@backstage/backend-plugin-api';
 //import { getBearerTokenFromAuthorizationHeader } from '@backstage/plugin-auth-node';
 
 
 export interface RouterOptions {
-  logger: Logger;
+  logger: Logger | LoggerService;
   config: Config;
   catalogApi: CatalogApi;
 }
